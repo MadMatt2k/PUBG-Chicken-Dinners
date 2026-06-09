@@ -18,7 +18,7 @@
 ## ✨ Features
 
 ### 📊 Stats & Comparisons
-Pull current-season FPP stats for any PUBG Steam player as a polished image. Squad FPP includes **True KD and True ADR** — calculated from raw match telemetry, excluding bots and friendly fire, with all deaths counted. Compare 2–3 players side by side.
+Pull current-season stats for any PUBG Steam player as a polished image — perspective follows your server's mode (FPP or TPP). Squad stats include **True KD and True ADR** — calculated from raw match telemetry, excluding bots and friendly fire, with all deaths counted. Compare 2–3 players side by side.
 
 ### 🏆 Win Posters
 Automatically detects when a tracked team wins and posts a custom win poster image — complete with player stats, kills, and match details.
@@ -33,7 +33,10 @@ Detailed last match reports posted automatically after every game — placement,
 Visualize where players land and survive to Phase 1, broken down by POI. Also tracks Phase 5 safe zone tendencies per map.
 
 ### 📈 Clan Rankings
-Nightly auto-ranking images scoring players across ADR, KD, Avg Placement, Assists, Revives and more. Supports on-demand posting and per-player visibility controls.
+Nightly auto-ranking images posted at 03:00 server time, scoring players across ADR, KD, Avg Placement, Assists, Revives and more. Each server independently chooses **Squad FPP or Squad TPP** as its ranking mode via a single `setmode` command. Rankings, stat cards, and comparisons all reflect the server's chosen perspective. Supports on-demand posting and per-player visibility controls.
+
+### 🔀 FPP & TPP Support
+The bot tracks both perspectives simultaneously for every player — no re-tracking needed. Switch your server's mode anytime with `/auto-clan-ranking` → `setmode`.
 
 ### 🌍 Global Player Ranking
 Cross-server leaderboard showing all tracked players across every connected Discord — with Guild labels per player.
