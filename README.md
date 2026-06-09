@@ -62,18 +62,18 @@ Cross-server leaderboard showing all tracked players across every connected Disc
 
 ## 📋 Commands Overview
 
-| Category | Commands |
-|---|---|
-| Stats | `/stats` `/compare` `/lastmatch` `/accountinfo` |
-| Heatmaps | `/dropsurvival` `/endzone` |
-| Tracking | `/adduser` `/removeuser` `/listusers` `/linkplayer` |
-| Rankings | `/global-player-ranking` `/autoclanranking` |
-| Auto Win | `/autowin` `/autowin-ignore-player` `/autowin-enable-player` |
-| Auto Report | `/autoreport` `/autoreport-ignore-player` `/autoreport-enable-player` |
-| Auto Last Match | `/autolastmatch` `/autolastmatch-ignore-player` `/autolastmatch-enable-player` |
-| Auto Ranking | `/autoclanranking-ignore-player` `/autoclanranking-enable-player` |
-| Testing | `/testwin` `/testreport` |
-| Admin | `/set_server_timezone` `/server` |
+| Category        | Commands                                                                                                          |
+| --------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Stats           | `/stats` `/compare` `/lastmatch` `/accountinfo`                                                                   |
+| Heatmaps        | `/dropsurvival` `/endzone`                                                                                        |
+| Tracking        | `/add-user` `/remove-user` `/list-tracked-users` `/link-player`                                                   |
+| Rankings        | `/global-player-ranking` `/global-guild-ranking` `/auto-clan-ranking`                                             |
+| Auto Win        | `/auto-win` `/auto-win-ignore-player` `/auto-win-enable-player`                                                   |
+| Auto Report     | `/auto-pubg-report` `/auto-pubg-report-ignore-player` `/auto-pubg-report-enable-player`                           |
+| Auto Last Match | `/auto-lastmatch` `/auto-lastmatch-ignore-player` `/auto-lastmatch-enable-player`                                 |
+| Auto Ranking    | `/auto-clan-ranking-ignore-player` `/auto-clan-ranking-enable-player`                                             |
+| Testing         | `/testwin` `/testreport`                                                                                          |
+| Admin           | `/set_server_timezone` `/change-update-channel` `/help`                                                           |
 
 ---
 
