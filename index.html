@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PUBG Chicken Dinner Bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:    #F5A623;
+      --gold-dim: #B8791A;
+      --green:   #4CAF50;
+      --bg:      #0D0F0E;
+      --surface: #141816;
+      --card:    #1A1D1B;
+      --border:  #2A2E2B;
+      --text:    #D8DDD9;
+      --muted:   #6B726D;
+      --white:   #F0F4F1;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245,166,35,0.07) 0%, transparent 70%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(245,166,35,0.04) 39px,
+          rgba(245,166,35,0.04) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(245,166,35,0.04) 39px,
+          rgba(245,166,35,0.04) 40px
+        );
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 4px 14px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(42px, 8vw, 88px);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 32px;
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 40px;
+      opacity: 0.85;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 12px 32px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #0D0F0E;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+    }
+
+    /* ── SECTION LAYOUT ── */
+    .section {
+      padding: 80px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text);
+      max-width: 640px;
+      opacity: 0.85;
+      margin-bottom: 40px;
+    }
+
+    /* ── FEATURE BLOCKS ── */
+    .feature-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      margin-bottom: 100px;
+    }
+
+    .feature-block.reverse { direction: rtl; }
+    .feature-block.reverse > * { direction: ltr; }
+
+    .feature-text {}
+
+    .feature-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .feature-title .icon {
+      margin-right: 8px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      color: var(--text);
+      opacity: 0.85;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .feature-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      background: var(--card);
+    }
+
+    .feature-img {
+      width: 100%;
+      border: 1px solid var(--border);
+      display: block;
+      background: var(--card);
+    }
+
+    /* ── SCREENSHOTS GRID ── */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .screenshot-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── COMMANDS TABLE ── */
+    .commands-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .commands-table th {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-align: left;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .commands-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .commands-table tr:last-child td { border-bottom: none; }
+
+    .commands-table tr:hover td { background: var(--card); }
+
+    .cat-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .cmd-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    code {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      padding: 2px 7px;
+    }
+
+    /* ── TPP CALLOUT ── */
+    .callout {
+      border-left: 3px solid var(--gold);
+      background: var(--card);
+      padding: 24px 28px;
+      margin-bottom: 40px;
+    }
+
+    .callout-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .callout p {
+      font-size: 15px;
+      color: var(--text);
+      opacity: 0.85;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .footer-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-disclaimer {
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .feature-block,
+      .feature-block.reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
+        gap: 32px;
+      }
+      .screenshots-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-badge">Discord Bot · Steam PC · Season 41</div>
+  <h1>PUBG <span>Chicken Dinner</span> Bot</h1>
+  <p class="hero-sub">Win Posters · Rankings · Match Reports · Streamer Clips</p>
+  <p class="hero-desc">
+    The most feature-complete PUBG tracking bot for Discord. Auto-posts win posters, nightly clan rankings, match reports, and streamer clip notifications — fully automated, zero effort.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">110+</div>
+      <div class="hero-stat-label">Discord Servers</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">700+</div>
+      <div class="hero-stat-label">Tracked Players</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">FPP + TPP</div>
+      <div class="hero-stat-label">Both Modes</div>
+    </div>
+  </div>
+  <div class="cta-group">
+    <a href="https://top.gg/bot/1403723550141186118" class="btn btn-primary">Add to Discord</a>
+    <a href="#features" class="btn btn-secondary">See Features</a>
+  </div>
+</section>
+
+<hr class="section-divider" />
+
+<!-- ══════════════ FEATURES ══════════════ -->
+<div class="section" id="features">
+
+  <!-- Win Posters -->
+  <div class="feature-block">
+    <div class="feature-text">
+      <div class="section-label">Auto Feature</div>
+      <h2 class="feature-title"><span class="icon">🏆</span>Win Posters</h2>
+      <p class="feature-desc">
+        Every chicken dinner gets celebrated automatically. The bot detects the win, generates a custom poster image with map, mode, team kills, damage, and individual player stats — and posts it to your configured channel within seconds.
+      </p>
+      <p class="feature-desc">
+        Role awards call out your MVP, Medic, Sharpshooter, and Marksman every game.
+      </p>
+      <div class="feature-pills">
+        <span class="pill">Auto-post</span>
+        <span class="pill">Role Awards</span>
+        <span class="pill">Squad Stats</span>
+        <span class="pill">Per-player ignore</span>
+      </div>
+    </div>
+    <div>
+      <img class="feature-img" src="Screenshots/win.png" alt="Win Poster example" />
+    </div>
+  </div>
+
+  <!-- Clan Rankings -->
+  <div class="feature-block reverse">
+    <div class="feature-text">
+      <div class="section-label">Nightly Auto Feature</div>
+      <h2 class="feature-title"><span class="icon">📈</span>Clan Rankings</h2>
+      <p class="feature-desc">
+        Nightly leaderboard images posted at 03:00 server time. Players are scored across ADR, K/D, Avg Placement, Assists/Match, Revives/Match, HS%, and Longest Kill. Minimum 40 qualifying rounds to rank.
+      </p>
+      <p class="feature-desc">
+        Each server independently chooses <strong style="color:var(--gold)">Squad FPP or Squad TPP</strong> as its ranking perspective. Switch anytime with a single command.
+      </p>
+      <div class="feature-pills">
+        <span class="pill">FPP &amp; TPP</span>
+        <span class="pill">True KD/ADR</span>
+        <span class="pill">On-demand postnow</span>
+        <span class="pill">Per-player hide</span>
+      </div>
+    </div>
+    <div>
+      <img class="feature-img" src="Screenshots/ranking.png" alt="Clan Ranking example" />
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="feature-block">
+    <div class="feature-text">
+      <div class="section-label">On Demand</div>
+      <h2 class="feature-title"><span class="icon">📊</span>Stat Cards</h2>
+      <p class="feature-desc">
+        Pull a polished current-season stat card for any tracked PUBG Steam player on demand. Shows Solo, Duo, and Squad stats — including <strong style="color:var(--gold)">True KD and True ADR</strong> calculated from raw match telemetry, excluding bots and friendly fire.
+      </p>
+      <p class="feature-desc">
+        A full score breakdown explains exactly how the player's ranking score is calculated — no black boxes.
+      </p>
+      <div class="feature-pills">
+        <span class="pill">True KD</span>
+        <span class="pill">True ADR</span>
+        <span class="pill">Score Breakdown</span>
+        <span class="pill">FPP &amp; TPP</span>
+      </div>
+    </div>
+    <div>
+      <img class="feature-img" src="Screenshots/stats.png" alt="Stat Card example" />
+    </div>
+  </div>
+
+  <!-- Last Match -->
+  <div class="feature-block reverse">
+    <div class="feature-text">
+      <div class="section-label">Auto Feature</div>
+      <h2 class="feature-title"><span class="icon">📋</span>Match Reports</h2>
+      <p class="feature-desc">
+        Detailed match reports posted automatically after every game. A team summary card shows map, placement, True Kills, True Damage, and role awards. A per-player breakdown lists every damage event, knock, kill, weapon, and range — including exactly how each player was eliminated.
+      </p>
+      <div class="feature-pills">
+        <span class="pill">Team Summary</span>
+        <span class="pill">Per-player Detail</span>
+        <span class="pill">Weapon + Range</span>
+        <span class="pill">Kill Feed</span>
+      </div>
+    </div>
+    <div class="screenshots-grid" style="grid-template-columns:1fr;">
+      <div class="screenshot-card">
+        <img src="Screenshots/lastmatch_team.png" alt="Last Match Team Summary" />
+        <div class="screenshot-label">Team Summary</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="Screenshots/lastmatch_players.png" alt="Last Match Player Breakdown" />
+        <div class="screenshot-label">Player Breakdown</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUBG Report -->
+  <div class="feature-block">
+    <div class="feature-text">
+      <div class="section-label">Auto Feature</div>
+      <h2 class="feature-title"><span class="icon">🎬</span>Streamer Clip Tracking</h2>
+      <p class="feature-desc">
+        Monitors pubg.report and automatically posts a clip notification whenever a tracked player eliminates a streamer. Each post includes killer, victim, map, and a direct link to the clip. Links the tracked player's Discord account for an @ mention ping.
+      </p>
+      <div class="feature-pills">
+        <span class="pill">pubg.report integration</span>
+        <span class="pill">Discord @ pings</span>
+        <span class="pill">Per-player ignore</span>
+      </div>
+    </div>
+    <div>
+      <img class="feature-img" src="Screenshots/pubg_reports.png" alt="PUBG Report Clips example" />
+    </div>
+  </div>
+
+  <!-- Drop Survival -->
+  <div class="feature-block reverse">
+    <div class="feature-text">
+      <div class="section-label">On Demand</div>
+      <h2 class="feature-title"><span class="icon">🗺️</span>Drop Survival Heatmap</h2>
+      <p class="feature-desc">
+        Visualize a tracked player's landing spots across all their games on a given map. Each POI shows Phase-1 survival rate and total drop count — instantly revealing where they perform best and where they struggle.
+      </p>
+      <p class="feature-desc">
+        A companion <code>/endzone</code> command maps where the Phase-5 safe zone tends to land per map.
+      </p>
+      <div class="feature-pills">
+        <span class="pill">Per-map</span>
+        <span class="pill">Phase-1 Survival %</span>
+        <span class="pill">Drop Count</span>
+        <span class="pill">All POIs</span>
+      </div>
+    </div>
+    <div>
+      <img class="feature-img" src="Screenshots/dropsurvival_Erangel.png" alt="Drop Survival Heatmap example" />
+    </div>
+  </div>
+
+</div>
+
+<hr class="section-divider" />
+
+<!-- ══════════════ TPP CALLOUT ══════════════ -->
+<div class="section">
+  <div class="callout">
+    <div class="callout-title">🔀 Full FPP &amp; TPP Support</div>
+    <p>The bot tracks both perspectives simultaneously for every player — no re-tracking needed. Each server independently chooses Squad FPP or Squad TPP as its ranking mode. Rankings, stat cards, and comparisons all reflect that choice. Switch your server's mode anytime with <code>/auto-clan-ranking</code> → <code>setmode</code>.</p>
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+<!-- ══════════════ COMMANDS ══════════════ -->
+<div class="section" id="commands">
+  <div class="section-label">Reference</div>
+  <h2 class="section-title">Commands</h2>
+  <p class="section-desc">All commands are slash commands. Run <code>/help</code> in Discord for a full list with descriptions.</p>
+
+  <table class="commands-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Commands</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="cat-label">Stats</span></td>
+        <td><div class="cmd-list"><code>/stats</code><code>/compare</code><code>/lastmatch</code><code>/accountinfo</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Heatmaps</span></td>
+        <td><div class="cmd-list"><code>/dropsurvival</code><code>/endzone</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Tracking</span></td>
+        <td><div class="cmd-list"><code>/add-user</code><code>/remove-user</code><code>/list-tracked-users</code><code>/link-player</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Rankings</span></td>
+        <td><div class="cmd-list"><code>/global-player-ranking</code><code>/global-guild-ranking</code><code>/auto-clan-ranking</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Auto Win</span></td>
+        <td><div class="cmd-list"><code>/auto-win</code><code>/auto-win-ignore-player</code><code>/auto-win-enable-player</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Auto Report</span></td>
+        <td><div class="cmd-list"><code>/auto-pubg-report</code><code>/auto-pubg-report-ignore-player</code><code>/auto-pubg-report-enable-player</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Auto Last Match</span></td>
+        <td><div class="cmd-list"><code>/auto-lastmatch</code><code>/auto-lastmatch-ignore-player</code><code>/auto-lastmatch-enable-player</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Auto Ranking</span></td>
+        <td><div class="cmd-list"><code>/auto-clan-ranking-ignore-player</code><code>/auto-clan-ranking-enable-player</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Testing</span></td>
+        <td><div class="cmd-list"><code>/testwin</code><code>/testreport</code></div></td>
+      </tr>
+      <tr>
+        <td><span class="cat-label">Admin</span></td>
+        <td><div class="cmd-list"><code>/set_server_timezone</code><code>/change-update-channel</code><code>/help</code></div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="section-divider" />
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-links">
+    <a href="https://top.gg/bot/1403723550141186118">Add to Discord</a>
+    <a href="https://top.gg/bot/1403723550141186118">top.gg Listing</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+  <p class="footer-disclaimer">
+    PUBG Chicken Dinner Bot is not affiliated with or endorsed by KRAFTON, Inc.<br>
+    PUBG and all related marks are trademarks of KRAFTON, Inc. · Supports Steam (PC) only.
+  </p>
+</footer>
+
+</body>
+</html>
