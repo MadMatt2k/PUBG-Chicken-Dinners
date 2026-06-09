@@ -53,9 +53,9 @@ Cross-server leaderboard showing all tracked players across every connected Disc
 ## 🚀 Getting Started
 
 1. [Add the bot to your server](https://top.gg/bot/1403723550141186118)
-2. Use `/adduser` to add your first PUBG player
-3. Use `/setchannel` on any auto-feature to configure your posting channel
-4. Enable features with `/autowin enable`, `/autolastmatch enable`, etc.
+2. Use `/add-user` to add your first PUBG player
+3. Use each auto-feature's `setchannel` action to configure your posting channel
+4. Enable features with `/auto-win enable`, `/auto-lastmatch enable`, etc.
 5. Run `/help` anytime to see all available commands
 
 ---
